@@ -43,5 +43,44 @@ __init__
 - 인스턴스생성떄 `클래스.클래스메서드(값값)` 하고 생성
 
 ## 데이터클래스
+- 값을 넣는게 주된 클래스에서 사용
+- `from dataclasses import dataclass` 필요하며 없으면 오류발생
+- `@dataclass` 붙여서 적용
+- 속성명과 타입힌트(및 기본값)을 적으며, 이 순서와 인자순서로 자동매핑된다 (init불필요)
+- 기본값이 없는것부터 먼저 작성하며, 있는것을 후에 작성한다. (자동매핑으로인한 오류발생위험때문에 오류발생가능)
+```
+from dataclasses import dataclass
+
+@dataclass
+class 클래스이름:
+    속성: 종류
+    속성: 종류 = 기본값
+
+# 예시
+    text : str
+    number : int = 0
+```
+
 ## 상속
+- `class 자식명(부모명) :`
+- 자식에서 같은이름의 메서드를 만들지않았으면, 부모메서드 내용을 그대로쓸수있음
+    - 자식꺼 같이름으로쓰이면 그자식꺼는 그내용으로
+    - 실행시 자식의것이쓰인게아니라 부모께쓰인거임
+- `super().__init__(변수)` : 부모의 init을 불러서 그 기능을 사용가능
+- `isinstance(값, 클래스)` : 값이 그클래스나, 그의자식인지 bool로 리턴
+
 ## 추상화
+- `@abstractmethod`
+- 추상클래스의 추상메서드는 부모에서 선언만해놓고, 자식들의경우 무조건 추상메서드의 구현을 해야함
+- import와 부모클래스에 부모로 ABC 필요
+from abc import ABC, abstractmethod
+```
+class 부모(ABC):
+    @abstractmethod
+    def 메서드이름(self):
+        pass
+
+class 자식(부모):
+    def 메서드이름(self):
+        실제 코드
+```
