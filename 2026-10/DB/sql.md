@@ -116,3 +116,47 @@ FROM titles WHERE show_id IN ('s1', 's2');
     ALTER TABLE titles ADD CONSTRAINT titles_show_id_key UNIQUE (show_id);
     ALTER TABLE titles ADD COLUMN id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY;
     ```
+
+- ON CONFLICT : 데이터 insert시 pk나 유니크 조건 충돌등이 발생하면, 에러를 내는 대신 업데이트(upsert)하거나 무시하도록 한다
+    `ON CONFLICT (name) DO NOTHING`
+
+## 조회심화
+### 집계함수
+- 모든집계함수는 NULL을 제외하고 계산한다
+- `AVG(컬럼명)` : 컬럼값 산술 평균
+- `COUNT` : 행(데이터)갯수
+- `SUM` : 전체합계
+- `MAX` : 최대값
+- `MIN` : 최소값
+- `HAVING` : group by 결과에 집계함수적용
+
+- `ANY` : 서브쿼리 반환값중 하나라도 조건만족하면 True
+- `ALL` : 서브쿼리 반환값 모두가 조건만족해야 True
+
+
+## 데이터무결성
+### PK : Primary Key
+- 기본키
+- 테이블에서 데이터 식별용 중복없는 컬럼
+
+### FK : Foreing Key
+- 외래키
+- 다른테이블의 PK를 참조하여 두테이블간 연결고리 형성하는 컬럼
+
+## JOIN
+### INNER JOIN
+- 일반적인 join
+- 두 테이블에서 서울일치하는 공통데이터만 결합하여 결과
+
+### LEFT JOIN
+- 왼쪽테이블의 모든데이터, 오른쪽테이블에서는 일치하는 데이터만 매칭(없으면 null)
+
+### RIGHT JOIN
+- left join의 반대
+
+
+## EXPLAIN
+- DB안에서 해당 쿼리가 어떻게 동작하는지 알려줌_분석
+- 쿼리앞에 명령어를 붙여서 사용
+- `ANALYZE` 명령어를 추가로 사용하여 분석+실행을 할수있음
+- 예 : `EXPLAIN SELECT * FROM test;`
